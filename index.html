@@ -12,6 +12,7 @@
   .top-btn { padding: 7px 14px; border: none; border-radius: 5px; color: white; font-weight: bold; cursor: pointer; font-size: 14px; white-space: nowrap; }
   .btn-exit { background: #8b003a; text-decoration: none; }
   .btn-exit:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+  html.standalone .btn-exit { display: none; }
   .btn-start { background: #2e8b57; }
   .btn-pause { background: #f0ad4e; }
   .btn-end { background: #d9534f; }
@@ -2295,6 +2296,17 @@ function buyDecor(d) {
   refreshShop();
   renderAll();
 }
+
+// The hosting site passes its main menu as <meta name="home-url">; without it there is nothing to return to.
+(function() {
+  const homeUrl = document.querySelector('meta[name="home-url"]')?.content;
+  if(homeUrl) {
+    document.getElementById("btnExit").href = homeUrl;
+  } else {
+    document.documentElement.classList.add("standalone");
+    document.title = document.title.replace(/ \| Tiny Projects$/, "");
+  }
+})();
 
 window.onload = init;
 </script>
