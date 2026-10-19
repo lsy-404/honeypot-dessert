@@ -490,12 +490,54 @@
   body.night .book-tab.active { background:#304561; }
   body.night .hud-challenge { background:#152337; border-color:#344761; color:#fff; }
   body.night .hud-challenge.done { background:#3f6b55; border-color:#3f6b55; color:#fff; }
+
+  /* 托管版：界面文字不用 emoji；品牌图标、未解锁占位、托盘订单与桌面状态改用样式，连击条与弹窗小标题换新版色板。 */
+  .brand-icon { width:36px; height:36px; flex:none; }
+  .bc-lock { display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; background:#f2ebe6; color:#a08a7c; font-size:18px; font-weight:700; }
+  .carry-icon.order-slip { font-size:14px; font-weight:700; color:#7a5a46; background:#f6f0e7; }
+  .carry-picture.order-slip { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border:1px solid #dfd1be; border-radius:8px; background:#fffaf0; font-size:14px; font-weight:700; color:#7a5a46; }
+  .guest-status { font-size:10px; color:#8c7b70; }
+  .guest-status.busy { color:#a8574a; font-weight:bold; }
+  .guest-status.eating { color:#b7782f; font-weight:bold; }
+  .guest-status.pay { color:#507c66; font-weight:bold; }
+  .guest-mood { font-size:9px; color:#a8574a; } .guest-mood.calm { color:#507c66; }
+  .eat-progress { width:70px; height:5px; margin:2px auto 0; border-radius:3px; background:#eadfd3; overflow:hidden; }
+  .eat-progress div { height:100%; background:#c78c33; transition:width .3s linear; }
+  .hud-combo { background:#fff3d8; border:1px solid #dba44d; color:#87531b; }
+  .modal-content h3 { color:#765347; }
+  .waiter { background:#507c66; border-color:#3f6352; }
+  .coffee-machine { background:#fffdfb; border:1px solid #e8dbd1; border-radius:12px; color:#755443; box-shadow:0 2px 6px #62432a06; }
+  .heart-group-label { color:#8b705d; }
+  body.night .coffee-machine { background:#16233a; border-color:#344963; }
+  .opt-item.danger { color:#a8574a; }
+  .clean-hint { color:#765347; } body.night .clean-hint { color:#f1dfbd; }
+  .guest-toast { background:#fffdfa; border:2px solid #c49655; border-radius:16px; box-shadow:0 12px 36px #49332322; }
+  .guest-toast .gt-title { color:#a66b28; } .guest-toast .gt-name { color:#765347; } .guest-toast .gt-desc { color:#958171; }
+  body.night .guest-toast { background:rgba(21,35,55,.97); border-color:#c69b5e; }
+  .save-slot { background:#fffdfa; }
+  .save-slot:hover { border-color:#c49655; background:#fbf5ee; }
+  .save-slot.auto,.save-slot.auto:hover { border-color:#e7cf9f; background:#fff8ea; }
+  .save-slot .slot-info { color:#7a675c; } .save-slot .slot-info b { color:#765347; }
+  .save-slot .slot-tag { background:#c78c33; }
+  .save-slot .slot-del { background:#f7e9e4; color:#a8574a; } .save-slot .slot-del:hover { background:#f0dcd5; }
+  .save-slot .slot-load { background:#e6efe9; color:#3f6352; } .save-slot .slot-load:hover { background:#d6e5db; }
+  body.night .save-slot .slot-load { background:#3f6b55; } body.night .save-slot .slot-load:hover { background:#4a7a62; }
+  .progress-bar { background:#eadfd3; } .progress-fill { background:#c78c33; }
+  body.night .progress-bar { background:#39485d; } body.night .progress-fill { background:#edbd72; }
+  body.night .bc-lock { background:#233348; }
+  body.night .carry-icon.order-slip, body.night .carry-picture.order-slip { background:#28384b; border-color:#657481; color:#fff; }
+  body.night .guest-status { color:#c9d6e6; }
+  body.night .guest-status.busy, body.night .guest-mood { color:#f0a59a; }
+  body.night .guest-status.eating { color:#edbd72; }
+  body.night .guest-status.pay, body.night .guest-mood.calm { color:#9fd0b0; }
+  body.night .eat-progress { background:#39485d; } body.night .eat-progress div { background:#edbd72; }
+  body.night .hud-combo { background:#263448; border-color:#c69b5e; color:#fff; }
 </style>
 </head>
 <body>
 
 <div class="top-bar">
-  <div class="brand"><span>🍯</span><div>蜜罐甜品屋<small>用心经营每一份甜蜜</small></div></div>
+  <div class="brand"><img class="brand-icon" src="./icon.svg" alt=""><div>蜜罐甜品屋<small>用心经营每一份甜蜜</small></div></div>
   <div class="business-actions">
   <button class="top-btn btn-start" id="btnStart">开始营业</button>
   <button class="top-btn btn-pause" id="btnPause" disabled>暂停营业</button>
@@ -505,18 +547,18 @@
   <button class="top-btn btn-book" id="btnBook">图鉴</button>
   </div>
   <div class="options-wrap">
-    <button class="top-btn btn-options" id="btnOptions">⚙ 选项</button>
+    <button class="top-btn btn-options" id="btnOptions">选项</button>
     <div class="options-menu" id="optionsMenu">
       <div class="menu-label">显示与工具</div>
-      <button class="opt-item" id="btnNight">🌙 夜间模式</button>
+      <button class="opt-item" id="btnNight">夜间模式</button>
       <button class="opt-item" id="toggleSmartWaiter" hidden></button>
       <button class="opt-item" id="toggleSmartGuests" hidden></button>
       <div class="menu-label">存档管理</div>
-      <button class="opt-item" id="btnSave">💾 存档</button>
-      <button class="opt-item" id="btnLoad">📂 读档</button>
+      <button class="opt-item" id="btnSave">存档</button>
+      <button class="opt-item" id="btnLoad">读档</button>
       <div class="menu-label">营业管理</div>
-      <button class="opt-item" id="btnEnd" disabled>⏹ 提前结束今天</button>
-      <button class="opt-item danger" id="btnReset">🔄 重新开始</button>
+      <button class="opt-item" id="btnEnd" disabled>提前结束今天</button>
+      <button class="opt-item danger" id="btnReset">重新开始</button>
     </div>
   </div>
   <a class="top-btn btn-exit" id="btnExit" href="../../" aria-label="退出游戏并返回 Tiny Projects">退出游戏</a>
@@ -529,7 +571,7 @@
       <div id="hudEvent" class="hud-event"></div>
     </div>
     <div class="hud-secondary">
-    <div id="hudCombo" class="hud-combo" style="display:none;">🔥 连击 <span id="comboNum">0</span> · 小费 +<span id="comboPct">0</span>%</div>
+    <div id="hudCombo" class="hud-combo" style="display:none;">连击 <span id="comboNum">0</span> · 小费 +<span id="comboPct">0</span>%</div>
     <div id="hudDisruption" class="hud-disruption" style="display:none;"></div>
     <div id="hudChallenge" class="hud-challenge" style="display:none;"></div>
     </div>
@@ -557,7 +599,7 @@
     <div class="queue-info" id="queueInfo">后厨队列：0</div>
     <div id="chefStations"></div>
     <div class="coffee-machine" id="coffeeMachine">
-      ☕ 咖啡机<br>未购买
+      咖啡机<br>未购买
     </div>
     <div class="waiter-status" id="waiterStatus">手持：空</div>
   </div>
@@ -583,9 +625,9 @@
 <div class="modal" id="shopModal">
   <div class="modal-content">
     <button class="modal-close" id="closeShopBtn" aria-label="关闭商店" title="关闭商店">×</button>
-    <h2>🏪 升级商店</h2>
-    <p style="text-align:center; color:#8b003a; margin-bottom:10px;">当前金币：<span id="shopMoney">200</span></p>
-    <section class="shop-recommendations"><h3>✨ 推荐购买</h3><div id="recommendationList"></div></section>
+    <h2>升级商店</h2>
+    <p style="text-align:center; color:#765347; margin-bottom:10px;">当前金币：<span id="shopMoney">200</span></p>
+    <section class="shop-recommendations"><h3>推荐购买</h3><div id="recommendationList"></div></section>
     <div class="shop-tabs">
       <button class="shop-tab active" data-tab="ops">经营升级</button>
       <button class="shop-tab" data-tab="recipe">食谱解锁</button>
@@ -602,8 +644,8 @@
     </div>
     <div class="shop-pane" id="paneRecipe" style="display:none;">
       <div class="sub-tabs">
-        <button class="sub-tab active" data-sub="drink">🥤 饮品</button>
-        <button class="sub-tab" data-sub="dessert">🍰 甜品</button>
+        <button class="sub-tab active" data-sub="drink">饮品</button>
+        <button class="sub-tab" data-sub="dessert">甜品</button>
       </div>
       <div id="foodListDrink"></div>
       <div id="foodListDessert" style="display:none;"></div>
@@ -617,14 +659,14 @@
   <div class="modal-content" style="width:520px;">
     <h2 id="saveSlotTitle">选择存档位</h2>
     <div class="save-list" id="saveSlotList"></div>
-    <button style="width:100%; margin-top:16px; padding:10px; background:#95a5a6; color:white; border:none; border-radius:8px; cursor:pointer;" id="closeSaveSlotBtn">关闭</button>
+    <button style="width:100%; margin-top:16px; padding:10px; background:#8e8680; color:white; border:none; border-radius:8px; cursor:pointer;" id="closeSaveSlotBtn">关闭</button>
   </div>
 </div>
 
 <div class="modal" id="startupModal">
   <div class="modal-content" style="width:380px; text-align:center;">
-    <h2>🍯 蜜罐甜品屋</h2>
-    <p style="color:#8b003a; margin-bottom:20px;">检测到自动存档，要继续吗？</p>
+    <h2>蜜罐甜品屋</h2>
+    <p style="color:#765347; margin-bottom:20px;">检测到自动存档，要继续吗？</p>
     <div id="startupSaveInfo" style="font-size:13px; color:#666; margin-bottom:18px;"></div>
     <div style="display:flex; gap:12px; justify-content:center;">
       <button class="gm-btn gm-btn-yes" id="startupLoad" style="padding:10px 28px; font-size:15px;">读取存档</button>
@@ -636,16 +678,16 @@
 <div class="modal" id="bookModal">
   <div class="modal-content" style="width:640px;">
     <button class="modal-close" id="closeBookBtn" aria-label="关闭图鉴" title="关闭图鉴">×</button>
-    <h2>📖 图鉴</h2>
+    <h2>图鉴</h2>
     <div class="book-tabs">
-      <button class="book-tab active" id="tabFood">🍰 食品图鉴</button>
-      <button class="book-tab" id="tabGuest">🧑 客人图鉴</button>
-      <button class="book-tab" id="tabEvent">🌟 事件图鉴</button>
+      <button class="book-tab active" id="tabFood">食品图鉴</button>
+      <button class="book-tab" id="tabGuest">客人图鉴</button>
+      <button class="book-tab" id="tabEvent">事件图鉴</button>
     </div>
     <div id="bookFoodPane">
       <div class="sub-tabs">
-        <button class="sub-tab active" data-foodtab="drink">🥤 饮品</button>
-        <button class="sub-tab" data-foodtab="dessert">🍰 甜品</button>
+        <button class="sub-tab active" data-foodtab="drink">饮品</button>
+        <button class="sub-tab" data-foodtab="dessert">甜品</button>
       </div>
       <div id="bookFoodListDrink"></div>
       <div id="bookFoodListDessert" style="display:none;"></div>
@@ -892,7 +934,7 @@ const TUTORIAL_STEPS = [
   {text:"餐品制作完成后，点击「取餐」或再次点击厨师工作台\n服务员会自动拾起已做好的餐品", target:"pickup"},
   {text:"端着餐品点击对应餐桌\n就能把餐品送给客人啦", target:"deliver"},
   {text:"客人用完餐会显示「结账」按钮\n点击收钱，客人就会离开", target:"checkout"},
-  {text:"🎉 第一单完成！\n再走一遍同样的流程（选客→落座→点单→制作→上菜→结账）\n完成第二单吧~", target:"waitArea"},
+  {text:"第一单完成！\n再走一遍同样的流程（选客→落座→点单→制作→上菜→结账）\n完成第二单吧~", target:"waitArea"},
   {text:"（继续经营）", target:""},
   {text:"（第二单流程同前）", target:""},
   {text:"客人走后桌子会变脏\n点击脏桌，服务员会过来清理干净", target:"clean"},
@@ -976,7 +1018,7 @@ function upgradeUnavailable(id) {
 function getUpgradePrice(up) {return up.type==='level'?(up.base_price||0)*Math.pow(2,getUpgradeLevel(up.id)):(up.price||0);}
 let autoServiceTimer=null, autoOwnedMove=false, autoLastAction='', autoManualUntil=0;
 function renderAutomationControls() {
-  [['toggleSmartWaiter',game.smartWaiterOwned,game.smartWaiterEnabled,'🤖 聪明的服务员'],['toggleSmartGuests',game.smartGuestsOwned,game.smartGuestsEnabled,'🪑 聪明的顾客']].forEach(function([id,owned,enabled,label]) {
+  [['toggleSmartWaiter',game.smartWaiterOwned,game.smartWaiterEnabled,'聪明的服务员'],['toggleSmartGuests',game.smartGuestsOwned,game.smartGuestsEnabled,'聪明的顾客']].forEach(function([id,owned,enabled,label]) {
     const el=document.getElementById(id);if(!el)return;el.hidden=!owned;el.textContent=label+'：'+(enabled?'开启':'关闭');el.setAttribute('aria-pressed',String(!!enabled));
   });
 }
@@ -1225,12 +1267,12 @@ function init() {
 function toggleNightMode() {
   game.nightMode = !game.nightMode;
   applyNightMode();
-  showToast(game.nightMode ? "🌙 已切换到夜间模式" : "☀️ 已切换到日间模式");
+  showToast(game.nightMode ? "已切换到夜间模式" : "已切换到日间模式");
 }
 function applyNightMode() {
   document.body.classList.toggle("night", !!game.nightMode);
   const btn = document.getElementById("btnNight");
-  if(btn) btn.textContent = game.nightMode ? "☀️ 日间模式" : "🌙 夜间模式";
+  if(btn) btn.textContent = game.nightMode ? "日间模式" : "夜间模式";
 }
 
 // ===================== 存档 / 读档 / 重新开始 =====================
@@ -1318,7 +1360,7 @@ function openSaveSlots(mode) {
   const modal = document.getElementById("saveSlotModal");
   const title = document.getElementById("saveSlotTitle");
   const list = document.getElementById("saveSlotList");
-  title.textContent = mode === "save" ? "💾 选择存档位（保存）" : "📂 选择存档位（读取）";
+  title.textContent = mode === "save" ? "选择存档位（保存）" : "选择存档位（读取）";
   list.innerHTML = "";
 
   const autoData = readAutoSave();
@@ -1406,7 +1448,7 @@ function openSaveSlots(mode) {
         function doSave() {
           try {
             writeSlot(i, { data: serializeGame(), savedAt: Date.now() });
-            showToast("💾 已保存到存档位 " + i);
+            showToast("已保存到存档位 " + i);
             modal.style.display = "none";
           } catch(err) { showInfo("存档失败：" + err.message, "错误"); }
         }
@@ -1478,7 +1520,7 @@ function applyLoadedSave(parsed) {
     renderHUD();
 
     if(game.status === "running") gameLoop();
-    showToast("📂 读档成功！第 " + game.day + " 天");
+    showToast("读档成功！第 " + game.day + " 天");
   } catch(err) {
     showInfo("读档失败，存档可能已损坏：" + err.message, "错误");
   }
@@ -1538,7 +1580,7 @@ function resetGame() {
     applyStatusToButtons();
     document.getElementById("btnStart").textContent = "开始营业";
     document.getElementById("coffeeMachine").style.display = "none";
-    document.getElementById("coffeeMachine").innerHTML = "☕ 咖啡机<br>未购买";
+    document.getElementById("coffeeMachine").innerHTML = "咖啡机<br>未购买";
     document.getElementById("shopModal").style.display = "none";
     document.getElementById("bookModal").style.display = "none";
     document.getElementById("tutorialOverlay").style.display = "none";
@@ -1553,7 +1595,7 @@ function resetGame() {
     renderHUD();
 
     if(game.tutorialEnabled) startTutorial();
-    showToast("🔄 已重新开始，新的甜品屋旅程！");
+    showToast("已重新开始，新的甜品屋旅程！");
   }, "重新开始");
 }
 
@@ -1723,11 +1765,11 @@ function renderCarryInventory() {
     const list=document.createElement("div");list.className="carry-list";
     if(!game.carryItems.length) {const empty=document.createElement("div");empty.className="carry-empty";empty.textContent="暂时没有携带物品";list.appendChild(empty);}
     game.carryItems.forEach(function(item) {
-      const food=FOOD_DATA[item.food],icon=item.isOrder?"📋":food.icon,destination=getItemDestination(item);
-      const badge=document.createElement("span");badge.className="carry-icon";badge.title=(item.isOrder?"待交订单：":"待送餐品：")+item.food+" ×"+item.count+" · "+destination;
+      const food=FOOD_DATA[item.food],icon=item.isOrder?"单":food.icon,destination=getItemDestination(item);
+      const badge=document.createElement("span");badge.className="carry-icon"+(item.isOrder?" order-slip":"");badge.title=(item.isOrder?"待交订单：":"待送餐品：")+item.food+" ×"+item.count+" · "+destination;
       badge.innerHTML=icon+'<small>×'+item.count+'</small>';itemsEl.appendChild(badge);
       const row=document.createElement("div");row.className="carry-item"+(item.isOrder?" is-order":"");row.title=badge.title;
-      const picture=document.createElement("span");picture.className="carry-picture";picture.textContent=icon;
+      const picture=document.createElement("span");picture.className="carry-picture"+(item.isOrder?" order-slip":"");picture.textContent=icon;
       const text=document.createElement("div");text.className="carry-copy";
       const name=document.createElement("div");name.className="carry-name";name.textContent=(item.isOrder?"订单 · ":"")+item.food+" ×"+item.count;
       const target=document.createElement("div");target.className="carry-destination";target.textContent=destination;
@@ -1754,7 +1796,7 @@ function updateWaiterPosition() {
       recEl.id = "waiterRecord";
       waiter.appendChild(recEl);
     }
-    recEl.textContent = "📝 记录中 " + game.waiterRecording.remain + "s";
+    recEl.textContent = "记录中 " + game.waiterRecording.remain + "s";
   } else if(recEl) {
     recEl.remove();
   }
@@ -1841,7 +1883,7 @@ function endDay() {
   setCoffeeCount(0);
   game.coffeeTimer = 0;
   game.selectedCoffee = false;
-  document.getElementById("coffeeMachine").innerHTML = "☕ 咖啡机<br>未购买";
+  document.getElementById("coffeeMachine").innerHTML = "咖啡机<br>未购买";
 
   renderAll();
   updateUI();
@@ -1978,7 +2020,7 @@ function gameLoop() {
         const btn = stationEl.querySelector(".pickup-btn");
         if(fill) fill.style.width = (st.progress * 100) + "%";
         if(st.progress >= 1) {
-          if(txt) txt.innerHTML = "✅ " + food.icon + " " + st.order.food + (st.order.count > 1 ? " ×" + st.order.count : "") + " 已做好";
+          if(txt) txt.innerHTML = food.icon + " " + st.order.food + (st.order.count > 1 ? " ×" + st.order.count : "") + " 已做好";
           if(btn) { btn.disabled = false; btn.textContent = "取餐"; }
         } else {
           if(txt) txt.innerHTML = "制作中：" + food.icon + st.order.food + (st.order.count > 1 ? " ×" + st.order.count : "");
@@ -2075,7 +2117,7 @@ function showNewGuestToast(type) {
   const div = document.createElement("div");
   div.className = "guest-toast";
   div.innerHTML =
-    '<div class="gt-title">✨ 出现新客人了！</div>' +
+    '<div class="gt-title">出现新客人了！</div>' +
     '<div class="gt-icon">' + (def.icon || "🧑") + '</div>' +
     '<div class="gt-name">' + def.name + '</div>' +
     '<div class="gt-desc">' + def.desc + '</div>';
@@ -2225,7 +2267,7 @@ function completeTakeOrder(guestId) {
     guest.status = "ordered";
     game.bubbles.push({
       tableId: guest.tableId, guestId: guestId,
-      text: "📋 点了：" + FOOD_DATA[food].icon + food + " ×" + guest.count,
+      text: "点了：" + FOOD_DATA[food].icon + food + " ×" + guest.count,
       time: Infinity, persist: true
     });
     game.carryItems.push({ food: food, count: guest.count, isOrder: true, guestId: guestId });
@@ -2240,7 +2282,7 @@ function completeTakeOrder(guestId) {
       guest.status = "ordered";
       game.bubbles.push({
         tableId: guest.tableId, guestId: guestId,
-        text: "📋 点了：" + FOOD_DATA[latest].icon + latest + " ×" + guest.count,
+        text: "点了：" + FOOD_DATA[latest].icon + latest + " ×" + guest.count,
         time: Infinity, persist: true
       });
       game.carryItems.push({ food: latest, count: guest.count, isOrder: true, guestId: guestId });
@@ -2265,7 +2307,7 @@ function completeTakeOrder(guestId) {
 
   game.bubbles.push({
     tableId: guest.tableId, guestId: guestId,
-    text: "📋 点了：" + FOOD_DATA[food].icon + food + " ×" + guest.count,
+    text: "点了：" + FOOD_DATA[food].icon + food + " ×" + guest.count,
     time: Infinity, persist: true
   });
 
@@ -2305,7 +2347,7 @@ function autoSubmitAllOrders() {
   autoAssignKitchenQueue();
   renderChefStations();
   renderAll();
-  showToast("📋 已提交 " + orders.length + " 个订单到后厨");
+  showToast("已提交 " + orders.length + " 个订单到后厨");
 }
 
 function autoPickupAllReady() {
@@ -2323,7 +2365,7 @@ function autoPickupAllReady() {
     renderChefStations();
     renderAll();
     tutorialNext(8);
-    showToast("🍽️ 已拾起 " + picked + " 份做好的餐品");
+    showToast("已拾起 " + picked + " 份做好的餐品");
   } else {
     renderAll();
   }
@@ -2441,7 +2483,7 @@ function cleanTable(tableId) {
 function renderCoffeeMachine() {
   const el=document.getElementById('coffeeMachine');el.style.display=game.hasCoffeeMachine?'block':'none';
   const cups=getCoffeeCount();
-  el.innerHTML=game.selectedCoffee?'☕ 已选中 · 剩余 '+cups+' 杯<br>点击客人使用':cups?'☕ 卡布奇诺 '+cups+' 杯<br>'+(game.coffeeLevel>=2?'自动照顾非满心客人':'点击选择 · 恢复 1 颗心'):'☕ 制作中…<br>本批 '+getCoffeeBatchSize()+' 杯 · '+Math.max(0,8-game.coffeeTimer)+' 秒';
+  el.innerHTML=game.selectedCoffee?'已选中 · 剩余 '+cups+' 杯<br>点击客人使用':cups?'卡布奇诺 '+cups+' 杯<br>'+(game.coffeeLevel>=2?'自动照顾非满心客人':'点击选择 · 恢复 1 颗心'):'制作中…<br>本批 '+getCoffeeBatchSize()+' 杯 · '+Math.max(0,8-game.coffeeTimer)+' 秒';
   document.body.classList.toggle('coffee-targeting',!!game.selectedCoffee);
 }
 function useCoffeeOnGuest(guestId,automatic) {
@@ -2450,7 +2492,7 @@ function useCoffeeOnGuest(guestId,automatic) {
   if(guest.hearts>=5){if(!automatic)showToast('这位客人已经满心啦，请选择其他客人');return false;}
   guest.hearts=Math.min(5,guest.hearts+1);setCoffeeCount(getCoffeeCount()-1);
   if(getCoffeeCount()===0){game.coffeeTimer=0;game.selectedCoffee=false;}
-  renderAll();if(!automatic)showToast('☕ 已为'+GUEST_TYPES[guest.type].name+'恢复 1 颗心');return true;
+  renderAll();if(!automatic)showToast('已为'+GUEST_TYPES[guest.type].name+'恢复 1 颗心');return true;
 }
 function selectCoffee() {
   if(game.status!=='running'||!game.hasCoffeeMachine)return;
@@ -2470,9 +2512,9 @@ function calculateDiningLayout() {
   const rows = Math.ceil(count / cols);
   const blockWidth = cols * TABLE_W + (cols - 1) * GAP_X;
   const blockHeight = rows * TABLE_H + (rows - 1) * GAP_Y;
-  const height = Math.max(visibleHeight, blockHeight + 220);
+  const height = Math.max(visibleHeight, blockHeight + 240);
   return {width:width, visibleHeight:visibleHeight, count:count, cols:cols, height:height,
-    x:Math.max(45, (width - 90 - blockWidth) / 2), y:Math.max(110, (height - blockHeight) / 2 - 10)};
+    x:Math.max(45, (width - 90 - blockWidth) / 2), y:Math.max(130, (height - blockHeight) / 2 - 10)};
 }
 function updateDiningLayout() {
   const next = calculateDiningLayout();
@@ -2539,10 +2581,10 @@ function renderChefStations() {
     const busy = st.order && st.progress < 1;
     const countLabel = st.order ? (st.order.count > 1 ? " ×" + st.order.count : "") : "";
     div.innerHTML =
-      '<h4>👨‍🍳 厨师' + (idx + 1) + '</h4>' +
+      '<h4>厨师' + (idx + 1) + '</h4>' +
       '<div class="cooking-text">' + (busy
         ? '制作中：' + FOOD_DATA[st.order.food].icon + st.order.food + countLabel
-        : ready ? '✅ ' + FOOD_DATA[st.order.food].icon + ' ' + st.order.food + countLabel + ' 已做好' : '空闲中') +
+        : ready ? FOOD_DATA[st.order.food].icon + ' ' + st.order.food + countLabel + ' 已做好' : '空闲中') +
       '</div>' +
       '<div class="progress-bar"><div class="progress-fill" style="width:' + (st.order ? st.progress * 100 : 0) + '%"></div></div>';
     const btn = document.createElement("button");
@@ -2580,7 +2622,7 @@ function updateUI() {
 function renderHUD() {
   const disruption = document.getElementById("hudDisruption");
   disruption.style.display = hasDisruptiveGuest() ? "block" : "none";
-  disruption.textContent = "😭 小屁孩在店 · 心情消耗 ×3 · 看菜单／点单／用餐／做菜 ×3 · 奔跑 ×2";
+  disruption.textContent = "小屁孩在店 · 心情消耗 ×3 · 看菜单／点单／用餐／做菜 ×3 · 奔跑 ×2";
   const comboEl = document.getElementById("hudCombo");
   if(game.combo >= 2) {
     comboEl.style.display = "block";
@@ -2599,11 +2641,11 @@ function renderHUD() {
   } else if(game.scheduledEvent) {
     evEl.classList.remove("event-active");
     evEl.style.display = "block";
-    evEl.innerHTML = '<div class="event-heading"><span>⏳ 今日预告 · ' + game.scheduledEvent.name + '</span><strong>即将到来</strong></div>';
+    evEl.innerHTML = '<div class="event-heading"><span>今日预告 · ' + game.scheduledEvent.name + '</span><strong>即将到来</strong></div>';
   } else {
     evEl.style.display = "block";
     evEl.classList.remove("event-active");
-    evEl.innerHTML = '<div class="event-heading"><span>🍯 今日营业</span><strong>暂无高峰事件</strong></div><div class="event-detail">从容接待，留意每位客人的需要。</div>';
+    evEl.innerHTML = '<div class="event-heading"><span>今日营业</span><strong>暂无高峰事件</strong></div><div class="event-detail">从容接待，留意每位客人的需要。</div>';
   }
 
   const chEl = document.getElementById("hudChallenge");
@@ -2612,7 +2654,7 @@ function renderHUD() {
     const done = c.progress() >= c.goal;
     chEl.style.display = "block";
     chEl.className = "hud-challenge" + (done ? " done" : "");
-    chEl.textContent = "📋 " + c.desc + "（" + Math.min(c.progress(), c.goal) + "/" + c.goal + "）";
+    chEl.textContent = c.desc + "（" + Math.min(c.progress(), c.goal) + "/" + c.goal + "）";
   } else chEl.style.display = "none";
 }
 
@@ -2623,7 +2665,7 @@ function checkDailyChallenge() {
     game.challengeRewardClaimed = true;
     game.money += c.reward;
     game.dayEarnings += c.reward;
-    showToast("🎯 每日挑战完成！奖励 " + c.reward + " 金币");
+    showToast("每日挑战完成！奖励 " + c.reward + " 金币");
   }
 }
 
@@ -2965,8 +3007,9 @@ function renderTables() {
     if(table.cleaning) {
       label.textContent = table.capacity + "人桌（清理中）";
       const hint = document.createElement("div");
-      hint.style.cssText = "text-align:center; margin-top:42px; color:#8b003a; font-weight:bold; font-size:14px;";
-      hint.innerHTML = "🧹 正在清理中…";
+      hint.className = "clean-hint";
+      hint.style.cssText = "text-align:center; margin-top:42px; font-weight:bold; font-size:14px;";
+      hint.innerHTML = "正在清理中…";
       div.appendChild(hint);
     } else if(table.dirty) {
       const hint = document.createElement("div");
@@ -2997,33 +3040,33 @@ function renderTables() {
         const gdef = GUEST_TYPES[guest.type] || GUEST_TYPES.normal;
         let statusHtml = "";
         if(guest.status === "reading") {
-          statusHtml = '<div style="font-size:10px;color:#666;">📖 看菜单中…</div>';
+          statusHtml = '<div class="guest-status">看菜单中…</div>';
         } else if(guest.status === "waiting_order") {
-          statusHtml = '<div style="font-size:10px;color:#666;">🙋 等待点单</div>';
+          statusHtml = '<div class="guest-status">等待点单</div>';
         } else if(guest.status === "recording") {
-          statusHtml = '<div style="font-size:10px;color:#c0392b;font-weight:bold;">📝 记录订单中…</div>';
+          statusHtml = '<div class="guest-status busy">记录订单中…</div>';
         } else if(guest.status === "ordered") {
-          statusHtml = '<div style="font-size:10px;color:#666;">⏳ 等待上菜</div>';
+          statusHtml = '<div class="guest-status">等待上菜</div>';
         } else if(guest.status === "eating") {
           const total = guest.eatTotal || FOOD_DATA[guest.food].eat_time || 1;
           const left = Math.max(0, guest.eatTimer);
           const pct = Math.max(0, Math.min(100, (1 - left / total) * 100));
           statusHtml =
-            '<div style="font-size:10px;color:#e67e22;font-weight:bold;">🍽️ 正在用餐</div>' +
-            '<div style="width:70px;height:5px;background:#eee;border-radius:3px;margin:2px auto 0;overflow:hidden;">' +
-              '<div style="height:100%;width:' + pct + '%;background:#ff9f43;transition:width 0.3s linear;"></div>' +
+            '<div class="guest-status eating">正在用餐</div>' +
+            '<div class="eat-progress">' +
+              '<div style="width:' + pct + '%"></div>' +
             '</div>';
         } else if(guest.status === "waiting_checkout") {
-          statusHtml = '<div style="font-size:10px;color:#2e8b57;font-weight:bold;">💰 等待结账</div>';
+          statusHtml = '<div class="guest-status pay">等待结账</div>';
         }
 
         if(waiterHere && guest.status === "eating") {
           if(guest.type === "homebody") {
-            statusHtml += '<div style="font-size:9px;color:#c0392b;">😰 有点紧张</div>';
+            statusHtml += '<div class="guest-mood">有点紧张</div>';
           } else if(guest.type === "rich" || guest.type === "foodie" || guest.type === "critic") {
-            statusHtml += '<div style="font-size:9px;color:#c0392b;">😠 警惕</div>';
+            statusHtml += '<div class="guest-mood">警惕</div>';
           } else if(SHY_TYPES_SLOW.indexOf(guest.type) !== -1) {
-            statusHtml += '<div style="font-size:9px;color:#27ae60;">😊 放松</div>';
+            statusHtml += '<div class="guest-mood calm">放松</div>';
           }
         }
 
@@ -3314,7 +3357,7 @@ function renderFoodBookPane(type, elementId) {
         const eatStars = durationStars(f.eat_time, 2, 28);
         const typeLabel = f.type === "drink" ? "饮品" : "甜点";
         return '<div class="book-card' + (unlocked ? "" : " locked") + '">' +
-          '<div class="bc-icon">' + (unlocked ? f.icon : "🔒") + '</div>' +
+          '<div class="bc-icon">' + (unlocked ? f.icon : '<span class="bc-lock">?</span>') + '</div>' +
           '<div class="bc-body">' +
             '<div class="bc-name">' + (unlocked ? name : "？？？") + '</div>' +
             '<div class="bc-desc">' + (unlocked ? f.desc : "尚未解锁的" + typeLabel) + '</div>' +
@@ -3323,7 +3366,7 @@ function renderFoodBookPane(type, elementId) {
                 '<div class="bc-row">制作：' + starHtml(cookStars) + '</div>' +
                 '<div class="bc-row">食用：' + starHtml(eatStars) + '</div>' +
                 '<div class="bc-row">已售出：' + sold + ' 份</div>'
-              : '<div class="bc-row">🔒 商店解锁价：' + f.unlock_price + ' 金币</div>') +
+              : '<div class="bc-row">未解锁 · 商店解锁价：' + f.unlock_price + ' 金币</div>') +
           '</div></div>';
       }).join("") +
   '</div>';
@@ -3344,7 +3387,7 @@ function renderGuestBook() {
         const pStars = patienceStars(g.decay);
         const gStars = generosityStars(g.tip);
         return '<div class="book-card' + (unlocked ? "" : " locked") + '" data-unlock-day="' + g.unlockDay + '">' +
-          '<div class="bc-icon">' + (unlocked ? g.icon : "❓") + '</div>' +
+          '<div class="bc-icon">' + (unlocked ? g.icon : '<span class="bc-lock">?</span>') + '</div>' +
           '<div class="bc-body">' +
             '<div class="bc-name">' + g.name + '</div>' +
             '<div class="bc-desc">' + g.desc + '</div>' +
@@ -3353,7 +3396,7 @@ function renderGuestBook() {
               ? '<div class="bc-row">耐心：' + starHtml(pStars) + '</div>' +
                 '<div class="bc-row">大方：' + starHtml(gStars) + '</div>' +
                 '<div class="bc-row">已服务：' + served + ' 组</div>'
-              : '<div class="bc-row">🔒 还有 ' + Math.max(1, g.unlockDay - game.day) + ' 天到来</div>') +
+              : '<div class="bc-row">未解锁 · 还有 ' + Math.max(1, g.unlockDay - game.day) + ' 天到来</div>') +
           '</div></div>';
       }).join("") +
   '</div>';
@@ -3385,7 +3428,7 @@ function renderEventBook() {
       const unlocked = game.triggeredEvents.indexOf(ev.id) !== -1;
       const effect = EVENT_EFFECT_DESC[ev.id] || "";
       return '<div class="book-card' + (unlocked ? "" : " locked") + '">' +
-        '<div class="bc-icon">' + (unlocked ? ev.icon : "❓") + '</div>' +
+        '<div class="bc-icon">' + (unlocked ? ev.icon : '<span class="bc-lock">?</span>') + '</div>' +
         '<div class="bc-body">' +
           '<div class="bc-name">' + (unlocked ? ev.name : "？？？") + '</div>' +
           '<div class="bc-desc">' + (unlocked ? ev.desc : "尚未触发的神秘事件") + '</div>' +
@@ -3393,7 +3436,7 @@ function renderEventBook() {
             ? '<div class="bc-row">时段：' + (EVENT_WINDOW_LABEL[ev.timeWindow] || "随机") + '</div>' +
               '<div class="bc-row">持续：' + ev.duration + ' 秒</div>' +
               '<div class="bc-row">效果：' + effect + '</div>'
-            : '<div class="bc-row">🔒 第 3 天起随机触发</div>') +
+            : '<div class="bc-row">未解锁 · 第 3 天起随机触发</div>') +
         '</div></div>';
     }).join("") +
   '</div>';
