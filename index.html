@@ -521,6 +521,14 @@
   .save-slot .slot-tag { background:#c78c33; }
   .save-slot .slot-del { background:#f7e9e4; color:#a8574a; } .save-slot .slot-del:hover { background:#f0dcd5; }
   .save-slot .slot-load { background:#e6efe9; color:#3f6352; } .save-slot .slot-load:hover { background:#d6e5db; }
+
+  /* 托管版：emoji 用随附的 Fluent Emoji 图片绘制（各设备一致），大小随所在位置的字号；评分星与已上餐勾选为 SVG。 */
+  img.emoji { display:inline-block; width:1em; height:1em; margin:0 .05em; vertical-align:-0.125em; pointer-events:none; }
+  .stars { display:inline-flex; gap:1px; vertical-align:-1px; }
+  .stars svg { width:12px; height:12px; fill:#d9a441; }
+  .stars .empty svg { fill:#e6dccf; }
+  body.night .stars .empty svg { fill:#3a4a60; }
+  .order-check svg { display:block; width:11px; height:11px; }
   body.night .save-slot .slot-load { background:#3f6b55; } body.night .save-slot .slot-load:hover { background:#4a7a62; }
   .progress-bar { background:#eadfd3; } .progress-fill { background:#c78c33; }
   body.night .progress-bar { background:#39485d; } body.night .progress-fill { background:#edbd72; }
@@ -817,7 +825,7 @@ function randomGuestType() {
 }
 
 const UPGRADE_DATA = [
-  {id:"day_length", name:"使时间的流速变慢…", base_price:200, max_level:2, type:"level", desc:"延长每日营业模拟时长（90→135→180秒）"},
+  {id:"day_length", name:"使时间的流速变慢…", base_price:200, max_level:2, type:"level", desc:"延长每日营业模拟时长（90 秒，逐级增至 135、180 秒）"},
   {id:"waiter_speed", name:"服务员移速 +20%", base_price:120, max_level:5, type:"level"},
   {id:"cook_speed", name:"厨师制作速度 +15%", base_price:180, max_level:5, type:"level"},
   {id:"hire_chef", name:"聘用新厨师", base_price:400, max_level:2, type:"level", desc:"新增一个独立灶台，可同时多做一份餐品"},
@@ -828,11 +836,11 @@ const UPGRADE_DATA = [
   {id:"wait_capacity", name:"等候区扩容至5组", price:200, max_level:1, type:"once"},
   {id:"coffee_machine", name:"购买咖啡机（卡布奇诺回1心）", price:600, max_level:1, type:"once"},
   {id:"add_table", name:"新增双人桌", base_price:250, max_level:6, type:"level"},
-  {id:"upgrade_4seat", name:"升级1张双人桌→四人桌", base_price:350, max_level:8, type:"level"},
-  {id:"upgrade_6seat", name:"升级1张四人桌→六人桌", base_price:550, max_level:8, type:"level"},
-  {id:"menu_optimize", name:"优化菜单", base_price:260, max_level:2, type:"level", desc:"客人看菜单更快（10-20秒 → 6-12秒 → 3-6秒）"},
-  {id:"order_record", name:"点单记录提速", base_price:220, max_level:2, type:"level", desc:"服务员记录订单更快（3秒 → 2秒 → 0秒）"},
-  {id:"carry_capacity", name:"扩大托盘", base_price:240, max_level:3, type:"level", desc:"服务员一次可携带更多物品（2→3→4→5，订单和餐品都占位）"},
+  {id:"upgrade_4seat", name:"将1张双人桌升级为四人桌", base_price:350, max_level:8, type:"level"},
+  {id:"upgrade_6seat", name:"将1张四人桌升级为六人桌", base_price:550, max_level:8, type:"level"},
+  {id:"menu_optimize", name:"优化菜单", base_price:260, max_level:2, type:"level", desc:"客人看菜单更快（10–20 秒，逐级缩短至 6–12、3–6 秒）"},
+  {id:"order_record", name:"点单记录提速", base_price:220, max_level:2, type:"level", desc:"服务员记录订单更快（3 秒，逐级缩短至 2、0 秒）"},
+  {id:"carry_capacity", name:"扩大托盘", base_price:240, max_level:3, type:"level", desc:"服务员一次可携带更多物品（2 件，逐级增至 3、4、5 件，订单和餐品都占位）"},
   {id:"smart_waiter",name:"聪明的服务员",price:5000,max_level:1,type:"once"},
   {id:"smart_guests",name:"聪明的顾客",price:8000,max_level:1,type:"once"},
   {id:"coffee_batch",name:"双杯卡布奇诺",price:900,max_level:1,type:"once"},
@@ -934,7 +942,7 @@ const TUTORIAL_STEPS = [
   {text:"餐品制作完成后，点击「取餐」或再次点击厨师工作台\n服务员会自动拾起已做好的餐品", target:"pickup"},
   {text:"端着餐品点击对应餐桌\n就能把餐品送给客人啦", target:"deliver"},
   {text:"客人用完餐会显示「结账」按钮\n点击收钱，客人就会离开", target:"checkout"},
-  {text:"第一单完成！\n再走一遍同样的流程（选客→落座→点单→制作→上菜→结账）\n完成第二单吧~", target:"waitArea"},
+  {text:"第一单完成！\n再走一遍同样的流程：选客、落座、点单、制作、上菜、结账\n完成第二单吧~", target:"waitArea"},
   {text:"（继续经营）", target:""},
   {text:"（第二单流程同前）", target:""},
   {text:"客人走后桌子会变脏\n点击脏桌，服务员会过来清理干净", target:"clean"},
@@ -3152,7 +3160,7 @@ function renderTables() {
       const count=guest.order?guest.order.count:guest.count;
       token.title="第"+(index+1)+"组 · "+foodName+" ×"+count+(guest.status!=="ordered"?" · 已上餐":" · 等待上餐");
       token.setAttribute("aria-label",token.title);
-      token.innerHTML='<span class="order-group">'+(index+1)+'</span><span class="order-food">'+FOOD_DATA[foodName].icon+'</span><span class="order-quantity">×'+count+'</span>'+(guest.status!=="ordered"?'<span class="order-check">✓</span>':'');
+      token.innerHTML='<span class="order-group">'+(index+1)+'</span><span class="order-food">'+FOOD_DATA[foodName].icon+'</span><span class="order-quantity">×'+count+'</span>'+(guest.status!=="ordered"?'<span class="order-check"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6.5l2.4 2.4 4.6-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>':'');
       orders.appendChild(token);
     });
     if(orders.childElementCount)div.appendChild(orders);
@@ -3311,9 +3319,10 @@ function generosityStars(tip) {
   return Math.max(1, Math.min(5, Math.round(1 + (tip - 0.8) / (3.0 - 0.8) * 4)));
 }
 function starHtml(n) {
+  const star = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 .8l1.6 3.3 3.6.5-2.6 2.5.6 3.6L6 9l-3.2 1.7.6-3.6L.8 4.6l3.6-.5z"/></svg>';
   let s = "";
-  for(let i = 0; i < 5; i++) s += i < n ? "★" : '<span class="empty">★</span>';
-  return '<span class="stars">' + s + '</span>';
+  for(let i = 0; i < 5; i++) s += i < n ? star : '<span class="empty">' + star + '</span>';
+  return '<span class="stars" role="img" aria-label="' + n + ' / 5">' + s + '</span>';
 }
 function openBook() {
   renderFoodBook();
@@ -3724,6 +3733,52 @@ function buyDecor(d) {
     document.documentElement.classList.add("standalone");
     document.title = document.title.replace(/ \| Tiny Projects$/, "");
   }
+})();
+
+// Emoji are drawn from the bundled Microsoft Fluent Emoji images (MIT, assets/emoji/LICENSE) so the game looks the
+// same on every device. Text is converted as the game writes it; its data and rendering code stay as they are.
+(function() {
+  const IMAGES = new Set(("1f30c 1f31f 1f327 1f331 1f334 1f335 1f337 1f339 1f33b 1f33e 1f33f 1f340 1f343 1f34a 1f351 1f353 " +
+    "1f360 1f369 1f36a 1f36b 1f36c 1f370 1f375 1f376 1f378 1f389 1f3a4 1f3a7 1f3a9 1f3ae 1f3c3-200d-2640 1f475 1f491 " +
+    "1f495 1f498 1f49d 1f4b0 1f4bc 1f4f7 1f50d 1f576 1f62d 1f6a6 1f90d 1f917 1f95b 1f95e 1f964 1f96d 1f9c1 1f9c7 1f9cb " +
+    "1f9d0 1f9d1 1f9d2 1f9d4 1f9ed 1f9f8 1f9f9 1fab4 1fab7 2615 2744 2764").split(" "));
+  const EMOJI = /\p{Extended_Pictographic}[\u{FE0E}\u{FE0F}\p{Emoji_Modifier}]?(?:\u{200D}\p{Extended_Pictographic}[\u{FE0F}\p{Emoji_Modifier}]?)*/gu;
+  const keyOf = emoji => [...emoji].map(ch => ch.codePointAt(0).toString(16)).filter(cp => cp !== "fe0f").join("-");
+  function convert(node) {
+    const text = node.data, parent = node.parentElement;
+    if(!parent || parent.closest("script, style, textarea, title")) return;
+    const fragment = document.createDocumentFragment();
+    let last = 0;
+    for(const match of text.matchAll(EMOJI)) {
+      const key = keyOf(match[0]);
+      if(!IMAGES.has(key)) continue;
+      if(match.index > last) fragment.append(text.slice(last, match.index));
+      const img = document.createElement("img");
+      img.className = "emoji";
+      img.src = "./assets/emoji/" + key + ".svg";
+      img.alt = match[0];
+      img.draggable = false;
+      fragment.append(img);
+      last = match.index + match[0].length;
+    }
+    if(!last) return;
+    if(last < text.length) fragment.append(text.slice(last));
+    node.replaceWith(fragment);
+  }
+  function scan(root) {
+    if(root.nodeType === Node.TEXT_NODE) { convert(root); return; }
+    if(root.nodeType !== Node.ELEMENT_NODE) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT), nodes = [];
+    while(walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(convert);
+  }
+  scan(document.body);
+  new MutationObserver(function(records) {
+    for(const record of records) {
+      if(record.type === "characterData") convert(record.target);
+      else record.addedNodes.forEach(scan);
+    }
+  }).observe(document.body, { childList: true, subtree: true, characterData: true });
 })();
 
 window.onload = init;
