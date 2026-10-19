@@ -471,6 +471,25 @@
   .btn-exit { display:inline-flex; align-items:center; background:#f0e7e1; color:#705347; text-decoration:none; }
   body.night .btn-exit { background:#233348; color:#fff; }
   html.standalone .btn-exit { display:none; }
+
+  /* 托管版：把仍沿用旧版粉/绿的教程、提示按钮、图鉴页签与名称、每日挑战换成新版米棕色板。 */
+  .tutorial-box { background:#fffdfa; border:2px solid #c49655; border-radius:16px; box-shadow:0 20px 60px #32221c40; }
+  .tutorial-box p { color:#654938; }
+  .tutorial-btn,.gm-btn-ok { background:#ae766e; color:#fff; border-radius:8px; }
+  .tutorial-skip-btn { background:#8e8680; border-radius:8px; }
+  .highlight-box { border-color:#e9b44c; border-radius:12px; box-shadow:0 0 0 4px #e9b44c40; }
+  .book-tabs { padding:5px; gap:4px; background:#f2ebe6; border-radius:12px; margin-bottom:16px; }
+  .book-tab { flex:1; padding:10px; border:0; border-radius:9px; background:transparent; color:#8c7366; }
+  .book-tab.active { background:#fffdfa; color:#815a4b; box-shadow:0 2px 6px #51392712; }
+  .book-card .bc-name { color:#755443; }
+  .hud-challenge { background:#fffdfa; border-color:#dccbb8; color:#7a5a46; }
+  .hud-challenge.done { background:#507c66; border-color:#507c66; color:#fff; }
+  body.night .tutorial-box { background:#152337; border-color:#c69b5e; }
+  body.night .book-tabs { background:#0d1725; }
+  body.night .book-tab { background:transparent; }
+  body.night .book-tab.active { background:#304561; }
+  body.night .hud-challenge { background:#152337; border-color:#344761; color:#fff; }
+  body.night .hud-challenge.done { background:#3f6b55; border-color:#3f6b55; color:#fff; }
 </style>
 </head>
 <body>
@@ -3501,11 +3520,10 @@ function renderFoodPane(type, elementId) {
     div.className = "upgrade-item";
     const typeLabel = data.type === "drink" ? "饮品" : "甜点";
     div.innerHTML = "<span>" + data.icon + " " + name + "（" + typeLabel + "，" + data.price + "金币/份）"
-      + (owned ? ' <span style="color:#2ecc71;font-size:11px;">已解锁</span>' : "") + "</span>";
+      + (owned ? ' <span style="color:#507c66;font-size:11px;">已解锁</span>' : "") + "</span>";
     if(!owned) {
       const btn = document.createElement("button");
       btn.className = "buy-btn";
-      btn.style.background = "#2e8b57";
       btn.textContent = data.unlock_price + " 金币";
       btn.disabled = game.money < data.unlock_price;
       btn.onclick = function() { unlockFood(name, data.unlock_price); };
@@ -3528,7 +3546,6 @@ function renderDecorList() {
       + '<span style="font-size:11px;color:#999;">' + desc + "（环境值，心情掉得更慢）</span></span>";
     const btn = document.createElement("button");
     btn.className = "buy-btn";
-    btn.style.background = "#2d8659";
     btn.textContent = maxed ? "已满级" : price + " 金币";
     btn.disabled = maxed || game.money < price;
     btn.onclick = function() { buyDecor(d); };
